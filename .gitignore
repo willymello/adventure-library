@@ -8,6 +8,8 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+assets/data/itemsExpanded.json
+assets/data/spellsExpanded.json
 
 # macOS
 .DS_Store
