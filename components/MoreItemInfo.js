@@ -47,12 +47,12 @@ export default MoreItemInfo = (props) => {
   ) {
     return (
       <View>
-        {item.desc
+        {/* {item.desc
           ? item.desc.map((str, idx) => {
               return <Text key={idx + 1}>{str}</Text>;
             })
-          : null}
-
+          : null} */}
+        <Text>{item.desc}</Text>
         <Text>
           Cost: {item.cost.quantity} {item.cost.unit}
         </Text>
@@ -66,12 +66,12 @@ export default MoreItemInfo = (props) => {
   ) {
     return (
       <View>
-        {item.desc
+        {/* {item.desc
           ? item.desc.map((str, idx) => {
               return <Text key={idx + 1}>{str}</Text>;
             })
-          : null}
-
+          : null} */}
+        <Text>{item.desc}</Text>
         <Text>
           Cost: {item.cost.quantity} {item.cost.unit}
         </Text>
@@ -82,11 +82,12 @@ export default MoreItemInfo = (props) => {
   if (item.equipment_category.name === "Mounts and Vehicles") {
     return (
       <View>
-        {item.desc
+        {/* {item.desc
           ? item.desc.map((str, idx) => {
               return <Text key={idx + 1}>{str}</Text>;
             })
-          : null}
+          : null} */}
+        <Text>{item.desc}</Text>
 
         <Text>
           Cost: {item.cost.quantity} {item.cost.unit}

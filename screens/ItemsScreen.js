@@ -14,7 +14,7 @@ import {
 import AsyncStorage from "@react-native-community/async-storage";
 import OneItem from "../components/OneItem";
 import Pack from "../components/Pack";
-import everyItem from "../assets/data/items.json";
+import everyItem from "../assets/data/itemsExpanded.json";
 
 export default class ItemsScreen extends React.Component {
   constructor() {
@@ -33,6 +33,9 @@ export default class ItemsScreen extends React.Component {
       // const res = await fetch("http://dnd5eapi.co/api/equipment/");
 
       const items = everyItem;
+      items
+        ? null
+        : new Error("you may need to run ./scripts/import_items.js ");
 
       this.setState({ allItems: items.results });
     } catch (error) {

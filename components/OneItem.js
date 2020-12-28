@@ -7,7 +7,7 @@ export default class OneItem extends React.Component {
     super();
     this.state = {
       open: false,
-      item: {}
+      item: {},
     };
   }
   click = () => {
@@ -17,8 +17,9 @@ export default class OneItem extends React.Component {
 
   componentDidMount = async () => {
     try {
-      const res = await fetch(this.props.item.url);
-      const item = await res.json();
+      // const res = await fetch(this.props.item.url);
+      // const item = await res.json();
+      const item = this.props.item;
       this.setState({ item });
     } catch (error) {
       console.error(error);
@@ -43,13 +44,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 2,
     borderColor: "#7A7A79",
-    borderWidth: 2
+    borderWidth: 2,
   },
   title: {
     fontFamily: osText,
-    fontSize: 20
+    fontSize: 20,
   },
   expand: {
-    fontFamily: ""
-  }
+    fontFamily: "",
+  },
 });

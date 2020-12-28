@@ -7,7 +7,7 @@ export default class OneSpell extends React.Component {
     super();
     this.state = {
       open: false,
-      spell: {}
+      spell: {},
     };
   }
   click = () => {
@@ -17,8 +17,9 @@ export default class OneSpell extends React.Component {
 
   componentDidMount = async () => {
     try {
-      const res = await fetch(this.props.spell.url);
-      const spell = await res.json();
+      // const res = await fetch(this.props.spell.url);
+      // const spell = await res.json();
+      const spell = this.props.spell;
       this.setState({ spell });
     } catch (error) {
       console.error(error);
@@ -42,11 +43,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#DEB887",
     alignItems: "baseline",
     borderColor: "brown",
-    borderWidth: 2
+    borderWidth: 2,
   },
   title: {
     alignSelf: "center",
     fontFamily: osText,
-    fontSize: 20
-  }
+    fontSize: 20,
+  },
 });

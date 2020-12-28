@@ -14,6 +14,8 @@ import OneSpell from "../components/OneSpell";
 
 import AsyncStorage from "@react-native-community/async-storage";
 
+import everySpell from "../assets/data/spellsExpanded.json";
+
 export default class SpellsScreen extends React.Component {
   constructor() {
     super();
@@ -27,8 +29,15 @@ export default class SpellsScreen extends React.Component {
   componentDidMount = async () => {
     try {
       // this.reset();
-      const res = await fetch("http://dnd5eapi.co/api/spells/");
-      const spells = await res.json();
+      // const res = await fetch("http://dnd5eapi.co/api/spells/");
+      // const spells = await res.json();
+
+      const spells = everySpell;
+
+      spells
+        ? null
+        : new Error("you may need to run ./scripts/import_spells.js ");
+
       this.setState({ allSpells: spells.results });
     } catch (error) {
       console.error(error);
