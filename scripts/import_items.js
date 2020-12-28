@@ -1,7 +1,8 @@
 "use strict";
-
+const sqlite = require("expo-sqlite");
 const fs = require("fs");
 const axios = require("axios");
+
 const ITEMS_PATH =
   "/Users/willy.mello/PersonalProjects/AdventureLibrary/assets/data/items.json";
 
@@ -44,4 +45,5 @@ async function iterateAndReturnData() {
   fs.writeFileSync(NEW_ITEMS_PATH, JSON.stringify(items));
   console.log("itemsExpanded.json created");
 }
+
 iterateAndReturnData();

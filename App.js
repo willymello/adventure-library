@@ -4,6 +4,10 @@ import * as Font from "expo-font";
 import React, { useState } from "react";
 import { Platform, StatusBar, StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import sqlStrings from "./assets/sqlStrings";
+
+import * as SQLite from "expo-sqlite";
+const db = SQLite.openDatabase("AdventureLibrary");
 
 import MainApp from "./navigation/AppNavigator";
 
@@ -36,6 +40,9 @@ async function loadResourcesAsync() {
       // We include SpaceMono because we use it in HomeScreen.js. Feel free to
       // remove this if you are not using it in your app
       "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf"),
+    }),
+    db.transaction((tx) => {
+      tx.executeSql(sqlStrings.CREATE.ITEMS_TABLE);
     }),
   ]);
 }
