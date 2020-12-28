@@ -2,9 +2,9 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import EquipmentPack from "./EquipmentPack";
 
-export default (MoreItemInfo = props => {
+export default MoreItemInfo = (props) => {
   const item = props.item;
-  if (item.equipment_category === "Weapon") {
+  if (item.equipment_category.name === "Weapon") {
     return (
       <View>
         <Text>Type: {item.category_range}</Text>
@@ -23,7 +23,7 @@ export default (MoreItemInfo = props => {
       </View>
     );
   }
-  if (item.equipment_category === "Armor") {
+  if (item.equipment_category.name === "Armor") {
     return (
       <View>
         <Text>Type: {item.armor_category} armor</Text>
@@ -42,8 +42,8 @@ export default (MoreItemInfo = props => {
   }
 
   if (
-    item.equipment_category === "Adventuring Gear" ||
-    item.equipment_category === "Tools"
+    item.equipment_category.name === "Adventuring Gear" ||
+    item.equipment_category.name === "Tools"
   ) {
     return (
       <View>
@@ -60,7 +60,10 @@ export default (MoreItemInfo = props => {
       </View>
     );
   }
-  if (item.gear_category === "Standard Gear" || item.gear_category === "Kit") {
+  if (
+    item.gear_category.name === "Standard Gear" ||
+    item.gear_category.name === "Kit"
+  ) {
     return (
       <View>
         {item.desc
@@ -76,7 +79,7 @@ export default (MoreItemInfo = props => {
       </View>
     );
   }
-  if (item.equipment_category === "Mounts and Vehicles") {
+  if (item.equipment_category.name === "Mounts and Vehicles") {
     return (
       <View>
         {item.desc
@@ -102,11 +105,11 @@ export default (MoreItemInfo = props => {
       <Text>No Interwebs, contact your Dungeon Meister</Text>
     </View>
   );
-});
+};
 const styles = StyleSheet.create({
   hideButton: {
     alignSelf: "center",
     paddingTop: 2,
-    paddingBottom: 2
-  }
+    paddingBottom: 2,
+  },
 });

@@ -8,16 +8,16 @@ import {
   TouchableOpacity,
   Button,
 } from "react-native";
-import { AsyncStorage } from "react-native-community/async-storage";
+import AsyncStorage from "@react-native-community/async-storage";
 import { calculateNewBalance } from "../assets/utilityFunctions";
-import t from "tcomb-form-native";
+// import t from "tcomb-form-native";
 
-const Form = t.form.Form;
-const Bank = t.struct({
-  gold: t.Number,
-  silver: t.Number,
-  copper: t.Number,
-});
+// const Form = t.form.Form;
+// const Bank = t.struct({
+//   gold: t.Number,
+//   silver: t.Number,
+//   copper: t.Number,
+// });
 
 export default class UserWallet extends React.Component {
   constructor() {
