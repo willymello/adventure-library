@@ -4,27 +4,33 @@ import * as Font from "expo-font";
 import React, { useState } from "react";
 import { Platform, StatusBar, StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import sqlStrings from "./assets/sqlStrings";
+
+import * as SQLite from "expo-sqlite";
+
+import allItems from "./assets/data/itemsExpanded.json";
 
 import MainApp from "./navigation/AppNavigator";
 
-export default function App(props) {
+export default function App() {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
+  const [getDb, setDb] = useState(null);
 
-  if (!isLoadingComplete && !props.skipLoadingScreen) {
+  if (!isLoadingComplete) {
     return (
-      // <AppLoading
-      //   startAsync={loadResourcesAsync}
-      //   onError={handleLoadingError}
-      //   onFinish={() => handleFinishLoading(setLoadingComplete)}
-      // />
-      MainApp()
+      <AppLoading
+        startAsync={() => loadResourcesAsync(setDb)}
+        onError={handleLoadingError}
+        onFinish={() => handleFinishLoading(setLoadingComplete)}
+      />
     );
   } else {
-    return MainApp();
+    return MainApp(getDb);
   }
 }
 
-async function loadResourcesAsync() {
+async function loadResourcesAsync(setDbInstance) {
+  const db = SQLite.openDatabase("AdventureLibrary");
   await Promise.all([
     Asset.loadAsync([
       require("./assets/images/robot-dev.png"),
@@ -37,7 +43,20 @@ async function loadResourcesAsync() {
       // remove this if you are not using it in your app
       "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf"),
     }),
-  ]);
+    db.transaction((tx) => {
+      tx.executeSql(sqlStrings.CREATE.ITEMS_TABLE);
+
+      allItems.forEach((el) => {
+        tx.executeSql(
+          sqlStrings.INSERT.ITEM,
+          (el.name, el.desc, el.equipment_category.name, JSON.stringify(el))
+        );
+      });
+    }),
+  ])
+    .then(() => setDbInstance(db))
+    .then(() => console.log("********* ********* ran db scripts"))
+    .catch((err) => console.log({ err }));
 }
 
 function handleLoadingError(error) {

@@ -1,13 +1,11 @@
 "use strict";
-
+const { resolve } = require("path");
 const fs = require("fs");
 const axios = require("axios");
-const ITEMS_PATH =
-  "/Users/willy.mello/PersonalProjects/AdventureLibrary/assets/data/items.json";
 
-const NEW_ITEMS_PATH =
-  "/Users/willy.mello/PersonalProjects/AdventureLibrary/assets/data/itemsExpanded.json";
+const ITEMS_PATH = resolve("assets/data/items.json");
 
+const NEW_ITEMS_PATH = resolve("assets/data/itemsExpanded.json");
 const EQUIPMENT_STRINGS = {
   weapon: "Weapon",
 };
@@ -41,7 +39,8 @@ async function iterateAndReturnData() {
     }
   }
   console.log({ items }, "items in iterate");
-  fs.writeFileSync(NEW_ITEMS_PATH, JSON.stringify(items));
+  fs.writeFileSync(NEW_ITEMS_PATH, JSON.stringify(items.results));
   console.log("itemsExpanded.json created");
 }
+
 iterateAndReturnData();

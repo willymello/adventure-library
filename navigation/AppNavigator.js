@@ -16,7 +16,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 const Tab = createBottomTabNavigator();
 
-export default function MainApp() {
+export default function MainApp(db) {
   return (
     <NavigationContainer>
       <Tab.Navigator initialRouteName="Home">

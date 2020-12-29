@@ -188,7 +188,7 @@ export default class HomeScreen extends React.Component {
   }
 
   componentDidMount = () => {
-    this._getAllPossessions();
+    // this._getAllPossessions();
   };
 
   render() {
