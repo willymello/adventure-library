@@ -1,6 +1,6 @@
 # Adventure Library
 
-Adventure Library is a react native DnD thesaurus
+Adventure Library is a react native DnD encyclopedia based on [DnD5eApi](http://dnd5eapi.co)
 
 ## Installation
 

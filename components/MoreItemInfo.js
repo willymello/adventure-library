@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import EquipmentPack from "./EquipmentPack";
 
 export default MoreItemInfo = (props) => {
-  const item = props.item;
+  const item = JSON.parse(props.item.details);
   if (item.equipment_category.name === "Weapon") {
     return (
       <View>

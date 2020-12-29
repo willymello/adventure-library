@@ -11,6 +11,8 @@ import {
   Text,
 } from "react-native";
 
+import * as SQLite from "expo-sqlite";
+import sqlStrings from "../assets/sqlStrings";
 import AsyncStorage from "@react-native-community/async-storage";
 import OneItem from "../components/OneItem";
 import Pack from "../components/Pack";
@@ -32,12 +34,23 @@ export default class ItemsScreen extends React.Component {
       // this.reset();
       // const res = await fetch("http://dnd5eapi.co/api/equipment/");
 
-      const items = everyItem;
-      items
-        ? null
-        : new Error("you may need to run ./scripts/import_items.js ");
+      // const items = await db.readTransaction(sqlStrings.SELECT.ALL_ITEMS);
 
-      this.setState({ allItems: items.results });
+      db.transaction((tx) => {
+        tx.executeSql(
+          sqlStrings.SELECT.ALL_ITEMS,
+          null, // passing sql query and parameters:null
+          // success callback which sends two things Transaction object and ResultSet Object
+          (txObj, { rows: { _array } }) => this.setState({ allItems: _array }),
+          // failure callback which sends two things Transaction object and Error
+          (txObj, error) => console.log("Error ", error)
+        ); // end executeSQL
+      });
+      // items
+      //   ? null
+      //   : new Error("you may need to run ./scripts/import_items.js ");
+
+      // this.setState({ allItems: items });
     } catch (error) {
       console.error(error);
     }
