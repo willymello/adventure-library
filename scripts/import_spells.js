@@ -4,10 +4,10 @@ const fs = require("fs");
 const axios = require("axios");
 const itemsResponse = require("../assets/data/items.json");
 const SPELLS_PATH =
-  "/Users/willy.mello/PersonalProjects/AdventureLibrary/assets/data/spells.json";
+  "~/PersonalProjects/AdventureLibrary/assets/data/spells.json";
 
 const NEW_SPELLS_PATH =
-  "/Users/willy.mello/PersonalProjects/AdventureLibrary/assets/data/spellsExpanded.json";
+  "~/PersonalProjects/AdventureLibrary/assets/data/spellsExpanded.json";
 
 const API_STRINGS = {
   ROOT: "http://dnd5eapi.co",

@@ -3,11 +3,10 @@ const sqlite = require("expo-sqlite");
 const fs = require("fs");
 const axios = require("axios");
 
-const ITEMS_PATH =
-  "/Users/willy.mello/PersonalProjects/AdventureLibrary/assets/data/items.json";
+const ITEMS_PATH = "~/PersonalProjects/AdventureLibrary/assets/data/items.json";
 
 const NEW_ITEMS_PATH =
-  "/Users/willy.mello/PersonalProjects/AdventureLibrary/assets/data/itemsExpanded.json";
+  "~/PersonalProjects/AdventureLibrary/assets/data/itemsExpanded.json";
 
 const EQUIPMENT_STRINGS = {
   weapon: "Weapon",
