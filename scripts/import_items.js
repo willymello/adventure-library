@@ -1,13 +1,12 @@
 "use strict";
 const sqlite = require("expo-sqlite");
+const { resolve } = require("path");
 const fs = require("fs");
 const axios = require("axios");
 
-const ITEMS_PATH = "~/PersonalProjects/AdventureLibrary/assets/data/items.json";
+const ITEMS_PATH = resolve("../assets/data/items.json");
 
-const NEW_ITEMS_PATH =
-  "~/PersonalProjects/AdventureLibrary/assets/data/itemsExpanded.json";
-
+const NEW_ITEMS_PATH = resolve("../assets/data/itemsExpanded.json");
 const EQUIPMENT_STRINGS = {
   weapon: "Weapon",
 };

@@ -1,13 +1,12 @@
 "use strict";
 
 const fs = require("fs");
+const { resolve } = require("path");
 const axios = require("axios");
 const itemsResponse = require("../assets/data/items.json");
-const SPELLS_PATH =
-  "~/PersonalProjects/AdventureLibrary/assets/data/spells.json";
+const SPELLS_PATH = resolve("../assets/data/spells.json");
 
-const NEW_SPELLS_PATH =
-  "~/PersonalProjects/AdventureLibrary/assets/data/spellsExpanded.json";
+const NEW_SPELLS_PATH = resolve("../assets/data/spellsExpanded.json");
 
 const API_STRINGS = {
   ROOT: "http://dnd5eapi.co",
