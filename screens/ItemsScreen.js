@@ -18,8 +18,8 @@ import OneItem from "../components/OneItem";
 import Pack from "../components/Pack";
 import everyItem from "../assets/data/itemsExpanded.json";
 
-export default class ItemsScreen extends React.Component {
-  constructor() {
+export default class ItemsScreen extends React.PureComponent {
+  constructor(...props) {
     super();
     this.state = {
       allItems: [],
@@ -30,13 +30,15 @@ export default class ItemsScreen extends React.Component {
     this.handleClear = this.handleClear.bind(this);
   }
   componentDidMount = async () => {
+    let database = this.props.db;
+    console.log({ database }, "0909099090909090909");
     try {
       // this.reset();
       // const res = await fetch("http://dnd5eapi.co/api/equipment/");
 
       // const items = await db.readTransaction(sqlStrings.SELECT.ALL_ITEMS);
 
-      db.transaction((tx) => {
+      database.transaction((tx) => {
         tx.executeSql(
           sqlStrings.SELECT.ALL_ITEMS,
           null, // passing sql query and parameters:null

@@ -20,10 +20,18 @@ export default function MainApp(db) {
   return (
     <NavigationContainer>
       <Tab.Navigator initialRouteName="Home">
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Create Character" component={CreateCharacterScreen} />
-        <Tab.Screen name="Spells" component={SpellsScreen} />
-        <Tab.Screen name="Items" component={ItemsScreen} />
+        <Tab.Screen name="Home">
+          {(props) => <HomeScreen {...props} db={db} />}
+        </Tab.Screen>
+        <Tab.Screen name="Create Character">
+          {(props) => <CreateCharacterScreen {...props} db={db} />}
+        </Tab.Screen>
+        <Tab.Screen name="Spells">
+          {(props) => <SpellsScreen {...props} db={db} />}
+        </Tab.Screen>
+        <Tab.Screen name="Items">
+          {(props) => <ItemsScreen {...props} db={db} />}
+        </Tab.Screen>
         {/* <Tab.Screen name="Tab Bar" component={TabBarIcon} /> */}
       </Tab.Navigator>
     </NavigationContainer>

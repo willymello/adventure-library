@@ -20,7 +20,7 @@ import UserItems from "../components/UserItems";
 import UserWallet from "../components/UserWallet";
 import CharacterInfo from "../components/CharacterInfo";
 
-export default class HomeScreen extends React.Component {
+export default class HomeScreen extends React.PureComponent {
   constructor({ navigation }) {
     super();
     this.state = {

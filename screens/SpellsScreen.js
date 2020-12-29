@@ -16,7 +16,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 
 import everySpell from "../assets/data/spellsExpanded.json";
 
-export default class SpellsScreen extends React.Component {
+export default class SpellsScreen extends React.PureComponent {
   constructor() {
     super();
     this.state = {

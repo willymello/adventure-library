@@ -16,7 +16,7 @@ export default function App() {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
   const [getDb, setDb] = useState(null);
 
-  if (!isLoadingComplete) {
+  if (!isLoadingComplete || getDb === null) {
     return (
       <AppLoading
         startAsync={() => loadResourcesAsync(setDb)}
@@ -29,36 +29,55 @@ export default function App() {
   }
 }
 
-async function loadResourcesAsync(setDbInstance) {
-  const db = SQLite.openDatabase("AdventureLibrary");
-  await Promise.all([
-    Asset.loadAsync([
-      require("./assets/images/robot-dev.png"),
-      require("./assets/images/robot-prod.png"),
-    ]),
-    Font.loadAsync({
-      // This is the font that we are using for our tab bar
-      ...Ionicons.font,
-      // We include SpaceMono because we use it in HomeScreen.js. Feel free to
-      // remove this if you are not using it in your app
-      "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf"),
-    }),
-    db.transaction((tx) => {
-      tx.executeSql(sqlStrings.CREATE.ITEMS_TABLE);
-
-      allItems.forEach((el) => {
-        tx.executeSql(
-          sqlStrings.INSERT.ITEM,
-          (el.name, el.desc, el.equipment_category.name, JSON.stringify(el))
-        );
-      });
-    }),
-  ])
-    .then(() => setDbInstance(db))
-    .then(() => console.log("********* ********* ran db scripts"))
-    .catch((err) => console.log({ err }));
+async function loadResourcesAsync(setDb) {
+  try {
+    await instantiateAndSeedDb(setDb);
+    await Promise.all([
+      Asset.loadAsync([
+        require("./assets/images/robot-dev.png"),
+        require("./assets/images/robot-prod.png"),
+      ]),
+      Font.loadAsync({
+        // This is the font that we are using for our tab bar
+        ...Ionicons.font,
+        // We include SpaceMono because we use it in HomeScreen.js. Feel free to
+        // remove this if you are not using it in your app
+        "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf"),
+      }),
+    ]).then(() => console.log("********* ********* ran db scripts"));
+  } catch (error) {
+    console.error(error);
+  }
 }
-
+async function instantiateAndSeedDb(setDb) {
+  try {
+    const db = SQLite.openDatabase("AdventureLibrary.db");
+    await db.transaction(
+      (tx) => {
+        tx.executeSql(sqlStrings.CREATE.ITEMS_TABLE());
+        console.log("need to seed db");
+        allItems.forEach((el) => {
+          console.log(el.name);
+          tx.executeSql(sqlStrings.INSERT.ITEM, [
+            el.name,
+            el.desc,
+            el.equipment_category.name,
+            JSON.stringify(el),
+          ]);
+        });
+      },
+      (error) => {
+        console.error(error);
+      },
+      () => {
+        console.log("db already existed");
+      }
+    );
+    setDb(db);
+  } catch (error) {
+    console.error(error);
+  }
+}
 function handleLoadingError(error) {
   // In this case, you might want to report the error to your error reporting
   // service, for example Sentry
