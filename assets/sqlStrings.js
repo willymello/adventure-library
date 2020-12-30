@@ -31,6 +31,9 @@ export default sqlStrings = {
     ONE_ITEM: (name) => {
       return `SELECT * FROM items WHERE name = ${name.toString()}`;
     },
+    ONE_COLUMN_FROM_ITEMS: (column) => {
+      return `SELECT ${column.toString()} FROM items ;`;
+    },
   },
   CONSTANTS: {
     EQUIPMENT_CATEGORY: {

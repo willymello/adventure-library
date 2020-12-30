@@ -31,19 +31,16 @@ export default class ItemsScreen extends React.PureComponent {
   }
   componentDidMount = async () => {
     let database = this.props.db;
-    console.log({ database }, "0909099090909090909");
+    console.log({ database });
     try {
-      // this.reset();
-      // const res = await fetch("http://dnd5eapi.co/api/equipment/");
-
-      // const items = await db.readTransaction(sqlStrings.SELECT.ALL_ITEMS);
-
       database.transaction((tx) => {
         tx.executeSql(
           sqlStrings.SELECT.ALL_ITEMS,
           null, // passing sql query and parameters:null
           // success callback which sends two things Transaction object and ResultSet Object
-          (txObj, { rows: { _array } }) => this.setState({ allItems: _array }),
+          (txObj, { rows: { _array } }) => {
+            this.setState({ allItems: _array });
+          },
           // failure callback which sends two things Transaction object and Error
           (txObj, error) => console.log("Error ", error)
         ); // end executeSQL

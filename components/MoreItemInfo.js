@@ -4,6 +4,7 @@ import EquipmentPack from "./EquipmentPack";
 
 export default MoreItemInfo = (props) => {
   const item = JSON.parse(props.item.details);
+  console.log(item.name, "=--=-===-= ", item, "item in more item info");
   if (item.equipment_category.name === "Weapon") {
     return (
       <View>

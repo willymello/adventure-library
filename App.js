@@ -44,7 +44,7 @@ async function loadResourcesAsync(setDb) {
         // remove this if you are not using it in your app
         "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf"),
       }),
-    ]).then(() => console.log("********* ********* ran db scripts"));
+    ]);
   } catch (error) {
     console.error(error);
   }
@@ -54,17 +54,36 @@ async function instantiateAndSeedDb(setDb) {
     const db = SQLite.openDatabase("AdventureLibrary.db");
     await db.transaction(
       (tx) => {
-        tx.executeSql(sqlStrings.CREATE.ITEMS_TABLE());
-        console.log("need to seed db");
-        allItems.forEach((el) => {
-          console.log(el.name);
-          tx.executeSql(sqlStrings.INSERT.ITEM, [
-            el.name,
-            el.desc,
-            el.equipment_category.name,
-            JSON.stringify(el),
-          ]);
-        });
+        tx.executeSql(
+          sqlStrings.CREATE.ITEMS_TABLE(),
+          [],
+          (txObj, { _array }) => {
+            if (txObj._complete) {
+              return allItems.forEach((el) => {
+                tx.executeSql(
+                  sqlStrings.INSERT.ITEM,
+                  [
+                    el.name,
+                    el.desc,
+                    el.equipment_category.name,
+                    JSON.stringify(el),
+                  ],
+                  (txObj, { _array }) => {
+                    console.log(txObj, "nested txObj in App.js success");
+                  },
+                  (txObj, errorObj) => {
+                    console.log(errorObj, "nested errorObj in App.js failure");
+                  }
+                );
+              });
+            } else {
+              console.log(txObj, "txObj in else clause");
+            }
+          },
+          (txObj, errorObj) => {
+            console.error(errorObj);
+          }
+        );
       },
       (error) => {
         console.error(error);
