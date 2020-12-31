@@ -51,6 +51,7 @@ async function loadResourcesAsync(setDb) {
 }
 async function instantiateAndSeedDb(setDb) {
   try {
+    console.log("called instantiate and seed db");
     const db = SQLite.openDatabase("AdventureLibrary.db");
     await db.transaction(
       (tx) => {
@@ -58,13 +59,16 @@ async function instantiateAndSeedDb(setDb) {
           sqlStrings.CREATE.ITEMS_TABLE(),
           [],
           (txObj, { _array }) => {
-            if (txObj._complete) {
-              return allItems.forEach((el) => {
-                tx.executeSql(
+            // if (txObj._complete) {
+            // TODO figure out what txObj._complete actually means
+            return allItems.forEach(async (el) => {
+              try {
+                let desc = el.desc ? el.desc : `a(n) ${el.name}`;
+                await tx.executeSql(
                   sqlStrings.INSERT.ITEM,
                   [
                     el.name,
-                    el.desc,
+                    desc,
                     el.equipment_category.name,
                     JSON.stringify(el),
                   ],
@@ -75,10 +79,13 @@ async function instantiateAndSeedDb(setDb) {
                     console.log(errorObj, "nested errorObj in App.js failure");
                   }
                 );
-              });
-            } else {
-              console.log(txObj, "txObj in else clause");
-            }
+              } catch (error) {
+                console.error(error);
+              }
+            });
+            // } else {
+            //   console.log(txObj, "txObj in else clause");
+            // }
           },
           (txObj, errorObj) => {
             console.error(errorObj);
@@ -105,6 +112,25 @@ function handleLoadingError(error) {
 
 function handleFinishLoading(setLoadingComplete) {
   setLoadingComplete(true);
+}
+async function seedDB(db_tx, item) {
+  if (item.equipment_category.name === "Weapon") {
+  }
+  if (item.equipment_category.name === "Armor") {
+  }
+
+  if (
+    item.equipment_category.name === "Adventuring Gear" ||
+    item.equipment_category.name === "Tools"
+  ) {
+  }
+  if (
+    item.gear_category.name === "Standard Gear" ||
+    item.gear_category.name === "Kit"
+  ) {
+  }
+  if (item.equipment_category.name === "Mounts and Vehicles") {
+  }
 }
 
 const styles = StyleSheet.create({

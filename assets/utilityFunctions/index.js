@@ -35,8 +35,6 @@ const calculateNewBalance = (bal, arr, str) => {
   return str === "w" ? withdrawal : deposit;
 };
 
-const whichInsertToUse = (arr = {});
-
 export {
   convertCurrencyToDenominations,
   convertDenominationstoCurrency,

@@ -14,9 +14,15 @@ export default MoreItemInfo = (props) => {
           Cost: {item.cost.quantity} {item.cost.unit}
         </Text>
         <Text>
-          Damage: {item.damage.dice_count}d{item.damage.dice_value}{" "}
-          {item.damage.damage_type.name} damage
+          Damage: {item.damage.damage_dice} {item.damage.damage_type.name}{" "}
+          damage
         </Text>
+        {item.two_handed_damage ? (
+          <Text>
+            Two Handed: {item.two_handed_damage.damage_dice}{" "}
+            {item.two_handed_damage.damage_type.name} damage
+          </Text>
+        ) : null}
         <Text>Normal Range: {item.range.normal}</Text>
         {item.range.long !== null ? (
           <Text>Long Range: {item.range.long}</Text>
@@ -61,25 +67,6 @@ export default MoreItemInfo = (props) => {
       </View>
     );
   }
-  if (
-    item.gear_category.name === "Standard Gear" ||
-    item.gear_category.name === "Kit"
-  ) {
-    return (
-      <View>
-        {/* {item.desc
-          ? item.desc.map((str, idx) => {
-              return <Text key={idx + 1}>{str}</Text>;
-            })
-          : null} */}
-        <Text>{item.desc}</Text>
-        <Text>
-          Cost: {item.cost.quantity} {item.cost.unit}
-        </Text>
-        <Text>Weight: {item.weight}</Text>
-      </View>
-    );
-  }
   if (item.equipment_category.name === "Mounts and Vehicles") {
     return (
       <View>
@@ -102,6 +89,26 @@ export default MoreItemInfo = (props) => {
       </View>
     );
   }
+  if (
+    item.gear_category.name === "Standard Gear" ||
+    item.gear_category.name === "Kit"
+  ) {
+    return (
+      <View>
+        {/* {item.desc
+          ? item.desc.map((str, idx) => {
+              return <Text key={idx + 1}>{str}</Text>;
+            })
+          : null} */}
+        <Text>{item.desc}</Text>
+        <Text>
+          Cost: {item.cost.quantity} {item.cost.unit}
+        </Text>
+        <Text>Weight: {item.weight}</Text>
+      </View>
+    );
+  }
+
   return (
     <View>
       <Text>No Interwebs, contact your Dungeon Meister</Text>

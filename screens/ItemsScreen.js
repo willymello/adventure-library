@@ -33,12 +33,18 @@ export default class ItemsScreen extends React.PureComponent {
     let database = this.props.db;
     console.log({ database });
     try {
-      database.transaction((tx) => {
+      await database.transaction((tx) => {
+        console.log(
+          tx,
+          "started select all items:",
+          sqlStrings.SELECT.ALL_ITEMS
+        );
         tx.executeSql(
           sqlStrings.SELECT.ALL_ITEMS,
           null, // passing sql query and parameters:null
           // success callback which sends two things Transaction object and ResultSet Object
           (txObj, { rows: { _array } }) => {
+            console.log({ _array }, "_array in itemsscreen", { txObj });
             this.setState({ allItems: _array });
           },
           // failure callback which sends two things Transaction object and Error
@@ -151,7 +157,9 @@ export default class ItemsScreen extends React.PureComponent {
             />
             <Button onPress={this.handleClear} title="clear" />
           </View>
-        ) : null}
+        ) : (
+          console.log(this.state.allItems)
+        )}
 
         <ScrollView style={styles.container}>
           {this.state.allItems.length ? (

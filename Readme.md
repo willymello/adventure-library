@@ -4,6 +4,11 @@ Adventure Library is a react native DnD encyclopedia based on [DnD5eApi](http://
 
 ## Installation
 
+Current State:
+This is a refactor of an old app of mine. Currently, only the items screen works.
+
+## Installation
+
 ```bash
 npm i expo-cli
 yarn install

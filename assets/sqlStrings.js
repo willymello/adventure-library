@@ -27,9 +27,9 @@ export default sqlStrings = {
     SPELL: "INSERT INTO items (name, desc, details)",
   },
   SELECT: {
-    ALL_ITEMS: "SELECT * FROM items",
+    ALL_ITEMS: "SELECT * FROM items;",
     ONE_ITEM: (name) => {
-      return `SELECT * FROM items WHERE name = ${name.toString()}`;
+      return `SELECT * FROM items WHERE name = ${name.toString()};`;
     },
     ONE_COLUMN_FROM_ITEMS: (column) => {
       return `SELECT ${column.toString()} FROM items ;`;
