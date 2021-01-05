@@ -90,7 +90,8 @@ async function instantiateAndSeedDb(setDb) {
             });
           },
           (txObj, errorObj) => {
-            console.error(errorObj);
+            console.error("error in create items table", errorObj);
+            return setDb(db);
           }
         );
       },
@@ -125,6 +126,7 @@ async function instantiateAndSeedDb(setDb) {
                           errorObj,
                           "nested errorObj in spell seeding failure"
                         );
+                        return setDb(db);
                       }
                     );
                   } catch (error) {
