@@ -27,18 +27,35 @@ export default class SpellsScreen extends React.PureComponent {
     this.handleClear = this.handleClear.bind(this);
   }
   componentDidMount = async () => {
+    let database = this.props.db;
     try {
       // this.reset();
       // const res = await fetch("http://dnd5eapi.co/api/spells/");
       // const spells = await res.json();
+      await database.transaction((tx) => {
+        console.log(
+          tx,
+          "started select all spellss:",
+          sqlStrings.SELECT.ALL_SPELLS
+        );
+        tx.executeSql(
+          sqlStrings.SELECT.ALL_SPELLS,
+          null, // passing sql query and parameters:null
+          // success callback which sends two things Transaction object and ResultSet Object
+          (txObj, { rows: { _array } }) => {
+            console.log({ _array }, "_array in spellsscreen", { txObj });
+            this.setState({ allSpells: _array });
+          },
+          // failure callback which sends two things Transaction object and Error
+          (txObj, error) => console.log("Error in fetching spells ", error)
+        ); // end executeSQL
+      });
 
-      const spells = everySpell;
+      // spells
+      //   ? null
+      //   : new Error("you may need to run ./scripts/import_spells.js ");
 
-      spells
-        ? null
-        : new Error("you may need to run ./scripts/import_spells.js ");
-
-      this.setState({ allSpells: spells.results });
+      // this.setState({ allSpells: spells.results });
     } catch (error) {
       console.error(error);
     }
