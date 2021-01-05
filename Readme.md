@@ -23,6 +23,40 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 Please make sure to update tests as appropriate.
 
+## Common Issues
+
+Since this project was created over a year ago, clean installing expo-cli will help resolve the below error after running expo start:
+
+```bash
+error: unknown option `--assetExts'
+```
+
+check expo version:
+
+```bash
+expo-cli --version
+```
+
+At the start of this refactor, my version was ~2.~.~
+
+To fully remove the old expo versions, i had to find the location of the old expo and expo-cli versions:
+
+```bash
+which expo
+which expo-cli
+
+rm -rf [path returned from which expo ]
+rm -rf [path returned from which expo-cli ]
+```
+
+Then install expo-cli
+
+```bash
+npm i -g expo-cli@latest
+```
+
+check expo version again to make sure everything is gravy
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
