@@ -30,7 +30,7 @@ export default class OneSpell extends React.Component {
       <TouchableOpacity style={styles.container} onPress={this.click}>
         <Text style={styles.title}>{this.props.spell.name}</Text>
         {this.state.open ? (
-          <MoreInfo spell={this.state.spell} onPress={this.click} />
+          <MoreInfo spell={this.state.spell.desc} onPress={this.click} />
         ) : null}
       </TouchableOpacity>
     );

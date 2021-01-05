@@ -9,8 +9,10 @@ import sqlStrings from "./assets/sqlStrings";
 import * as SQLite from "expo-sqlite";
 
 import allItems from "./assets/data/itemsExpanded.json";
+import allSpells from "./assets/data/spellsExpanded.json";
 
 import MainApp from "./navigation/AppNavigator";
+import { NavigationContext } from "@react-navigation/native";
 
 export default function App() {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
@@ -46,7 +48,7 @@ async function loadResourcesAsync(setDb) {
       }),
     ]);
   } catch (error) {
-    console.error(error);
+    console.error("error in load resources async", error);
   }
 }
 async function instantiateAndSeedDb(setDb) {
@@ -55,12 +57,11 @@ async function instantiateAndSeedDb(setDb) {
     const db = SQLite.openDatabase("AdventureLibrary.db");
     await db.transaction(
       (tx) => {
+        //seed items
         tx.executeSql(
           sqlStrings.CREATE.ITEMS_TABLE(),
           [],
           (txObj, { _array }) => {
-            // if (txObj._complete) {
-            // TODO figure out what txObj._complete actually means
             return allItems.forEach(async (el) => {
               try {
                 let desc = el.desc ? el.desc : `a(n) ${el.name}`;
@@ -73,33 +74,82 @@ async function instantiateAndSeedDb(setDb) {
                     JSON.stringify(el),
                   ],
                   (txObj, { _array }) => {
-                    console.log(txObj, "nested txObj in App.js success");
+                    console.log(txObj, "nested txObj in item seeding success");
+                    //seed items
                   },
                   (txObj, errorObj) => {
-                    console.log(errorObj, "nested errorObj in App.js failure");
+                    console.log(
+                      errorObj,
+                      "nested errorObj in item seeding failure"
+                    );
                   }
                 );
               } catch (error) {
                 console.error(error);
               }
             });
-            // } else {
-            //   console.log(txObj, "txObj in else clause");
-            // }
           },
           (txObj, errorObj) => {
             console.error(errorObj);
           }
         );
       },
-      (error) => {
-        console.error(error);
+      () => {
+        console.error("error seeded db ");
       },
       () => {
-        console.log("db already existed");
+        console.log("success seeding");
+        db.transaction(
+          //func
+          (tx) => {
+            console.log("called seeding spells");
+            tx.executeSql(
+              sqlStrings.CREATE.SPELLS_TABLE(),
+              [],
+              (txObj, { _array }) => {
+                return allSpells.forEach(async (el) => {
+                  console.log({ el }, "element");
+                  try {
+                    await tx.executeSql(
+                      sqlStrings.INSERT.SPELL,
+                      [el.name, el.desc, JSON.stringify(el)],
+                      (txObj, { _array }) => {
+                        console.log(
+                          txObj,
+                          "nested txObj in spell seeding success"
+                        );
+                        return setDb(db);
+                      },
+                      (txObj, errorObj) => {
+                        console.log(
+                          errorObj,
+                          "nested errorObj in spell seeding failure"
+                        );
+                      }
+                    );
+                  } catch (error) {
+                    console.error("spells error:", error);
+                  }
+                });
+              },
+              (txObj, errorObj) => {
+                console.error(errorObj);
+              }
+            );
+          },
+          //seed spells
+
+          () => {
+            console.log("error");
+          },
+          () => {
+            console.log("success");
+          }
+        );
       }
     );
-    setDb(db);
+
+    // setDb(db);
   } catch (error) {
     console.error(error);
   }

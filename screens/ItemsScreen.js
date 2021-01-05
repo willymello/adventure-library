@@ -31,7 +31,6 @@ export default class ItemsScreen extends React.PureComponent {
   }
   componentDidMount = async () => {
     let database = this.props.db;
-    console.log({ database });
     try {
       await database.transaction((tx) => {
         console.log(
@@ -48,14 +47,9 @@ export default class ItemsScreen extends React.PureComponent {
             this.setState({ allItems: _array });
           },
           // failure callback which sends two things Transaction object and Error
-          (txObj, error) => console.log("Error ", error)
+          (txObj, error) => console.log("Error in fetching items ", error)
         ); // end executeSQL
       });
-      // items
-      //   ? null
-      //   : new Error("you may need to run ./scripts/import_items.js ");
-
-      // this.setState({ allItems: items });
     } catch (error) {
       console.error(error);
     }
