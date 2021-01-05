@@ -18,8 +18,8 @@ import OneItem from "../components/OneItem";
 import Pack from "../components/Pack";
 import everyItem from "../assets/data/itemsExpanded.json";
 
-export default class ItemsScreen extends React.Component {
-  constructor() {
+export default class ItemsScreen extends React.PureComponent {
+  constructor(...props) {
     super();
     this.state = {
       allItems: [],
@@ -30,18 +30,23 @@ export default class ItemsScreen extends React.Component {
     this.handleClear = this.handleClear.bind(this);
   }
   componentDidMount = async () => {
+    let database = this.props.db;
+    console.log({ database });
     try {
-      // this.reset();
-      // const res = await fetch("http://dnd5eapi.co/api/equipment/");
-
-      // const items = await db.readTransaction(sqlStrings.SELECT.ALL_ITEMS);
-
-      db.transaction((tx) => {
+      await database.transaction((tx) => {
+        console.log(
+          tx,
+          "started select all items:",
+          sqlStrings.SELECT.ALL_ITEMS
+        );
         tx.executeSql(
           sqlStrings.SELECT.ALL_ITEMS,
           null, // passing sql query and parameters:null
           // success callback which sends two things Transaction object and ResultSet Object
-          (txObj, { rows: { _array } }) => this.setState({ allItems: _array }),
+          (txObj, { rows: { _array } }) => {
+            console.log({ _array }, "_array in itemsscreen", { txObj });
+            this.setState({ allItems: _array });
+          },
           // failure callback which sends two things Transaction object and Error
           (txObj, error) => console.log("Error ", error)
         ); // end executeSQL
@@ -152,7 +157,9 @@ export default class ItemsScreen extends React.Component {
             />
             <Button onPress={this.handleClear} title="clear" />
           </View>
-        ) : null}
+        ) : (
+          console.log(this.state.allItems)
+        )}
 
         <ScrollView style={styles.container}>
           {this.state.allItems.length ? (

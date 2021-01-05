@@ -68,7 +68,7 @@ import OneRace from "../components/OneRace";
 //   projectId: "spelllibrarynative",
 // });
 // const db = firebase.firestore();
-export default class CreateCharacterScreen extends React.Component {
+export default class CreateCharacterScreen extends React.PureComponent {
   constructor() {
     super();
     this.state = {
@@ -110,14 +110,15 @@ export default class CreateCharacterScreen extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   addCharacterToParty = async () => {
-    try {
-      let ref = await db
-        .collection("parties/rooms/alaska")
-        .add(this.state.newChar);
-      console.log("new ref");
-    } catch (error) {
-      console.error(error);
-    }
+    //todo no need for firebase
+    // try {
+    //   let ref = await db
+    //     .collection("parties/rooms/alaska")
+    //     .add(this.state.newChar);
+    //   console.log("new ref");
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
   handleSubmit() {
     const stats = this._form.getValue();

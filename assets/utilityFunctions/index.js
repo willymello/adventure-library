@@ -1,4 +1,4 @@
-const convertCurrencyToDenominations = num => {
+const convertCurrencyToDenominations = (num) => {
   let cash = num.toString();
   let gp;
   let sp;
@@ -22,7 +22,7 @@ const convertCurrencyToDenominations = num => {
   return [gp, sp, cp];
 };
 
-const convertDenominationstoCurrency = arr => {
+const convertDenominationstoCurrency = (arr) => {
   return arr[0] * 100 + arr[1] * 10 + arr[2];
 };
 
@@ -34,8 +34,9 @@ const calculateNewBalance = (bal, arr, str) => {
   }
   return str === "w" ? withdrawal : deposit;
 };
+
 export {
   convertCurrencyToDenominations,
   convertDenominationstoCurrency,
-  calculateNewBalance
+  calculateNewBalance,
 };

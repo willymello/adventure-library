@@ -11,7 +11,6 @@ export default class OneItem extends React.Component {
     };
   }
   click = () => {
-    console.log("clicked clikc");
     this.setState({ open: !this.state.open });
   };
 
@@ -19,7 +18,9 @@ export default class OneItem extends React.Component {
     try {
       // const res = await fetch(this.props.item.url);
       // const item = await res.json();
+
       const item = this.props.item;
+      // item.details = JSON.parse(this.props.item.details);
       this.setState({ item });
     } catch (error) {
       console.error(error);

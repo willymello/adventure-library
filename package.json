@@ -31,6 +31,5 @@
   "devDependencies": {
     "@babel/core": "~7.9.0"
   },
-  "private": true,
-  "sdkVersion": "40.0.0"
+  "private": true
 }
