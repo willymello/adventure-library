@@ -11,8 +11,7 @@ import {
 } from "react-native";
 
 import OneSpell from "../components/OneSpell";
-
-import AsyncStorage from "@react-native-community/async-storage";
+import ScreenHeader from "../components/ScreenHeader";
 
 import everySpell from "../assets/data/spellsExpanded.json";
 
@@ -108,24 +107,7 @@ export default class SpellsScreen extends React.PureComponent {
     });
     return (
       <View style={styles.container2}>
-        {this.state.allSpells.length ? (
-          <View style={{ display: "flex", flexDirection: "row" }}>
-            <Text>Search:</Text>
-            <TextInput
-              style={{
-                flex: 2,
-                borderWidth: 1,
-                borderColor: "black",
-                borderStyle: "solid",
-              }}
-              defaultValue=""
-              title="search"
-              onChange={(text) => this.handlePress(text)}
-              value={this.state.searchTerm}
-            />
-            <Button onPress={this.handleClear} title="clear" />
-          </View>
-        ) : null}
+        {this.state.allSpells.length ? <ScreenHeader title={"Spells"} /> : null}
         <ScrollView title={"Spells"} style={styles.container}>
           {this.state.allSpells.length ? (
             spells.map((elem, idx) => {

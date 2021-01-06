@@ -16,6 +16,7 @@ import sqlStrings from "../assets/sqlStrings";
 import AsyncStorage from "@react-native-community/async-storage";
 import OneItem from "../components/OneItem";
 import Pack from "../components/Pack";
+import ScreenHeader from "../components/ScreenHeader";
 import everyItem from "../assets/data/itemsExpanded.json";
 
 export default class ItemsScreen extends React.PureComponent {
@@ -135,22 +136,7 @@ export default class ItemsScreen extends React.PureComponent {
     return (
       <View style={styles.container2}>
         {this.state.allItems.length ? (
-          <View style={{ display: "flex", flexDirection: "row" }}>
-            <Text>Search:</Text>
-            <TextInput
-              style={{
-                flex: 2,
-                borderWidth: 1,
-                borderColor: "black",
-                borderStyle: "solid",
-              }}
-              defaultValue=""
-              title="search"
-              onChange={(text) => this.handlePress(text)}
-              value={this.state.searchTerm}
-            />
-            <Button onPress={this.handleClear} title="clear" />
-          </View>
+          <ScreenHeader title={"Items"} />
         ) : (
           console.log(this.state.allItems)
         )}
